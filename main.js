@@ -114,8 +114,7 @@ document.querySelector('#cards').innerHTML =
 
             cards.forEach(card => card.classList.remove('current-card'));
             cards[currentCard].scrollIntoView({
-                inline: "center",
-                behavior: "smooth"
+                inline: "center"
             });
 
             cards[currentCard].classList.add('current-card');
