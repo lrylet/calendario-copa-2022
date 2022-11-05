@@ -12,7 +12,7 @@ let delay = -0.4;
 function createCard(date, day, games) {
     delay = delay + 0.4;
     return `
-    <div class="card" style="animation-delay:${delay}s">
+    <div class="card current-card" style="animation-delay:${delay}s">
             <h2>${date} <span>${day}</span></h2>
             <ul>
             ${games}
@@ -27,7 +27,6 @@ document.querySelector('#cards').innerHTML =
          createCard('20/11', 'domingo', 
             createGame('qatar', '13:00', 'ecuador')
         )
-
 
         + createCard('21/11', 'segunda', 
             createGame('england', '13:00', 'iran') + createGame('senegal', '13:00', 'netherlands') +
@@ -88,3 +87,39 @@ document.querySelector('#cards').innerHTML =
             createGame('south-korea', '12:00', 'portugal') + createGame('ghana', '12:00', 'uruguay') +
             createGame('serbia', '16:00', 'switzerland') + createGame('cameroon', '16:00', 'brazil')
         )
+
+    
+    const controls = document.querySelectorAll('.control');
+    let currentCard = 0;
+    const cards = document.querySelectorAll('.card');
+    const maxCards = cards.length;
+
+    controls.forEach(control => {
+        control.addEventListener('click', () => {
+            const isLeft = control.classList.contains('arrow-left');
+
+            if(isLeft) {
+                currentCard -= 1;
+            } else {
+                currentCard += 1;
+            }
+
+            if (currentCard >= maxCards) {
+                currentCard = 0;
+            }
+
+            if (currentCard < 0) {
+                currentCard = maxCards -1;
+            }
+
+            cards.forEach(card => card.classList.remove('current-card'));
+            cards[currentCard].scrollIntoView({
+                inline: "center",
+                behavior: "smooth"
+            });
+
+            cards[currentCard].classList.add('current-card');
+
+        })
+    })
+
